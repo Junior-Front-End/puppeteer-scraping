@@ -8,21 +8,13 @@ var app = express()
 app.use(express.static("server/public"))
 
 
-//
+// 1st route
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname + 'public/index.html'))
 })
 
-
-//
-function delay(time) {
-  return new Promise(function(resolve) { 
-      setTimeout(resolve, time)
-  });
-}
-
-
-//
+ 
+// api
 app.get('/likeeid', (req, res) => {
 
   //
@@ -30,6 +22,14 @@ app.get('/likeeid', (req, res) => {
   if (!likeeid) return res.json({message: "pls insert id!"})
   console.log(likeeid);
  
+  //
+  function delay(time) {
+    return new Promise(function(resolve) { 
+        setTimeout(resolve, time)
+    });
+  }
+
+
 
   //
   (async () => {
@@ -66,7 +66,7 @@ app.get('/likeeid', (req, res) => {
     // await page.waitForSelector('img.both-center', {visible: true}); 
     await page.waitForSelector('div.toast , div.user-info-box div.name', {visible: true});  
 
-    // await page.screenshot({path: "./screenshot.png"});
+    await page.screenshot({path: "./screenshot.png"});
 
     //   
     const scrapedData = await page.evaluate(() => {
